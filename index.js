@@ -13,6 +13,11 @@ const routerCompras = require('./src/Routes/routesCompras');
 const routerReportes = require('./src/Routes/routesReporte');
 const routerGastos = require('./src/Routes/routesGastos');
 
+//prueba
+const router = express.Router();
+router.get('/', async(req, res) => {
+    res.send("Hola, Pepe");
+});
 
 const app = express();
 const port = process.env.PORT || 3001;
@@ -27,7 +32,7 @@ app.use(cors());
 connectDB();
 
 //--invoco rutas con app-------------------------------------------------
-app.use("/productos", routerProductos);
+/* app.use("/productos", routerProductos);
 app.use('/clientes', routerClientes);
 app.use('/remitos', routerRemitos);
 app.use('/proveedores', routerProveedores);
@@ -36,6 +41,7 @@ app.use('/usuarios', routerUser);
 app.use('/compras', routerCompras);
 app.use('/reportes', routerReportes);
 app.use('/gastos', routerGastos);
+ */
 
 
 app.listen(port, () => {
