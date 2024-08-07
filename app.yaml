@@ -1,0 +1,9 @@
+runtime: nodejs20
+
+env_variables:
+  MONGO_URI: "mongodb+srv://especiera:especiera@especiera.moe7o.mongodb.net/especiera?retryWrites=true&w=majority&appName=especiera"
+  CLOUDINARY_CLOUD_NAME: "djbal0hfc"
+  CLOUDINARY_API_KEY: "863294399329526"
+  CLOUDINARY_API_SECRET: "-Fdt_QWpvE5xoPOkyyI2a3oRe99c"
+  PASS_SEC: "marcos"
+  JWT_SEC: "marcos"
