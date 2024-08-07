@@ -64,7 +64,7 @@ router.get('/:_id', getById);
 //modifica prod
 router.put('/:_id', upload.single("imagen"), async(req, res) => {    
     try {
-        const { _id } = req.params; console.log(req.body);
+        const { _id } = req.params;
         const prod = await Producto.findById({_id});
 
         //manejo de la imagen SI es q viene
