@@ -93,7 +93,6 @@ const modificaCliente = async (req, res) => {
         const { _id } = req.params;
         const updateData = req.body;
 
-
         const updatedClient = await Cliente.findByIdAndUpdate(_id, updateData);
 
         if (!updatedClient) {

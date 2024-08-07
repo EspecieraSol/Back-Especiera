@@ -10,14 +10,14 @@ const getProveedores = async(req, res) => {
                 nombre: p.nombre,
                 apellido: p.apellido,
                 nombreApe: p.nombre+" "+p.apellido,
-                razonSocial: p.razonSocial,
-                telefono: p.telefono,
-                email: p.email,
-                ciudad: p.ciudad,
-                direccion: p.direccion,
-                cuit: p.cuit,
-                iva: p.iva,
-                remitos: p.remitos,
+                razonSocial:p.razonSocial,
+                telefono:p.telefono,
+                email:p.email,
+                ciudad:p.ciudad,
+                direccion:p.direccion,
+                cuit:p.cuit,
+                iva:p.iva,
+                remitos:p.remitos,
             }
             return newP;
         });
