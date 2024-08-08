@@ -101,7 +101,6 @@ router.put('/:_id', upload.single("imagen"), async(req, res) => {
         console.log(error)
     }
 });
-
 //elimina prod
 router.delete('/:_id', eliminaProd);
 
