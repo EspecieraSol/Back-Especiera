@@ -21,7 +21,11 @@ const port = process.env.PORT || 3001;
 // Middleware--------------------------------
 app.use(express.json()); //middleware para manejo de json en las solicitudes
 dotenv.config();
-app.use(cors());
+app.use(cors({
+    origin: 'front-especiera-sol-jjfi.vercel.app',
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    credentials: true
+}));
 
 //--conexion DB----------------------------------------------------------
 connectDB();
