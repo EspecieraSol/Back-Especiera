@@ -119,6 +119,14 @@ const creaRemito = async(req, res) => {
     try {
         const { numRemito, cliente, items, fecha, totPedido, cuit, condicion_pago, estado, bultos, transporte} = req.body; 
 
+        //calcula el tot de kgs del remito
+        let totKgs = 0;
+        items.forEach(item => {
+            if(item.unidadMedida !== "unidad"){
+                totKgs += item.cantidad;
+            }
+        });
+
         const newRemito = new Remito({
             numRemito,
             cliente, 
@@ -131,6 +139,7 @@ const creaRemito = async(req, res) => {
             estado,
             bultos,
             transporte,
+            totKgs
         });
         await newRemito.save();
         res.json(newRemito);
@@ -142,16 +151,42 @@ const creaRemito = async(req, res) => {
 const modificaRemito = async(req, res) => {    
     try {
         const {_id} = req.params;
-        const data = req.body;
+        const { numRemito, cliente, items, fecha, totPedido, cuit, condicion_pago, estado, bultos, transporte } = req.body; 
 
-        const remito = await Remito.findByIdAndUpdate(_id, data);
+        // Calcula el tot de kgs del remito
+        let totKgs = 0;
+        items.forEach(item => {
+            if(item.unidadMedida !== "unidad"){
+                totKgs += item.cantidad;
+            }
+        });
 
-        if(!remito){ return res.send("No existe el remito")}
+        // Actualiza solo los campos necesarios
+        const updatedFields = {
+            numRemito,
+            cliente, 
+            items,
+            fecha, 
+            totPedido, 
+            cuit, 
+            condicion_pago, 
+            estado,
+            bultos,
+            transporte,
+            totKgs
+        };
 
-        res.send("Se modif con exito");
+        const remito = await Remito.findByIdAndUpdate(_id, updatedFields, { new: true });
+
+        if(!remito){ 
+            return res.status(404).send("No existe el remito");
+        }
+
+        res.send("Se modificó con éxito");
 
     } catch (error) {
-        
+        console.error("Error al modificar el remito:", error);
+        res.status(500).send("Error al modificar el remito");
     }
 };
 //elimna remito
@@ -173,7 +208,7 @@ const elimninaRemito = async(req, res) => {
 const agregaEntrega = async(req, res) => {
     const {_id} = req.params;
     const {monto, metodoPago} = req.body; 
-    const fechaActual = new Date(); 
+    const fechaActual = new Date(); //console.log("fecha:", fechaActual)
     try {
         let remito = await Remito.findById(_id);
         if(!remito){return res.send("No existe el remito")}
@@ -244,7 +279,7 @@ const eliminarEntrega = async (req, res) => {
 const calcSaldoAnteriror = async(req, res) => {
     const {cuit} = req.params; //console.log("Cuit:", req.params);
     try {
-        const remitos = await Remito.find({cuit});
+        const remitos = await Remito.find({cuit}); 
         let saldo = 0;
 
         remitos.map(r => {
