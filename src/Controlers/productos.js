@@ -42,7 +42,7 @@ const getById = async(req, res) => {
 };
 //crea
 const creaProducto = async(req, res) => {
-    const { nombre, unidadMedida, precioKg, precioKgContado, envase, envaseEspecial, costo, posicionLista } = req.body; 
+    const { nombre, unidadMedida, precioKg, precio50,  precio100, envase, costo, posicionLista } = req.body; 
     try {
         // Desplazar las posiciones de los productos existentes
         await Producto.updateMany(
@@ -55,9 +55,9 @@ const creaProducto = async(req, res) => {
             nombre,
             unidadMedida,
             precioKg,
-            precioKgContado,
+            precio50,
+            precio100,
             envase,
-            envaseEspecial,
             costo,
             posicionLista,
         });
