@@ -2,7 +2,7 @@ const express = require('express');
 const { 
     getAllProducts, eliminaProd, buscaPorNombre, 
     getById, creaProducto, modifProd 
-} = require('../Controlers/productos');
+} = require('../Controlers/productos'); //
 
 
 const router = express.Router();

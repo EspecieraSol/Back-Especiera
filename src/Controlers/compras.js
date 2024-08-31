@@ -1,4 +1,4 @@
-const Compra = require('../Models/modelCompras');
+const Compra = require('../Models/modelCompras'); //
 
 const getAllCompras = async(req, res) => {
     //así llega fecha: 2024-07-01
