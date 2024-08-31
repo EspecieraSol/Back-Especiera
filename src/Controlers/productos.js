@@ -1,5 +1,5 @@
 const Producto = require('../Models/modelProductos');
-
+//no img
 //trae productos desde la DB
 const getAllProducts = async(req, res) => {
     try {
