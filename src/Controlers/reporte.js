@@ -26,7 +26,7 @@ const traeVentasMes = async(month, year) => {
     }
 };
 //funcion trae Compras PARA un MES
-const traeComprasMes = async(month, year) => {
+const traeComprasMes = async (month, year) => {
     try {
         const startDate = new Date(year, month - 1, 1);
         const endDate = new Date(year, month, 1);
@@ -71,7 +71,6 @@ const traeGastosMes = async(month, year) => {
         
     }
 };
-
 //funcion trae ventas Calc todo el mes Retorna el tot del mes
 const traeVentas = async(month, year) => {
     try {
