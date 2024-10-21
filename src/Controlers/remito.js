@@ -138,7 +138,7 @@ const creaRemito = async (req, res) => {
         // Ajustar la fecha recibida para asignar la hora actual local
         fechaLocal.setHours(ahora.getHours(), ahora.getMinutes(), ahora.getSeconds(), ahora.getMilliseconds());
 
-        console.log("fechaHora ajustada:", fechaLocal);
+        //console.log("fechaHora ajustada:", fechaLocal);
 
         // Calcular el total de kgs del remito
         let totKgs = 0;
