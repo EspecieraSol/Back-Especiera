@@ -132,6 +132,7 @@ const getRemito = async(req, res) => {
 //crea
 const creaCompra = async(req, res) => {
     const {
+        fecha,
         numCompra, 
         numRemitoProveedor, 
         transporte,
@@ -147,41 +148,27 @@ const creaCompra = async(req, res) => {
         detallePago,
         cuit
     } = req.body; 
-    try {     
-        if(detalle === 'Anticipo'){
-            const newCompra = new Compra({
-                fecha: Date.now(),
-                proveedor,
-                envio: "Pago",
-                detalle,
-                total,                
-                cuit,
-                detallePago,
-                estado: "Pago"
-            });
-            await newCompra.save();
-            return res.json(newCompra);
-        }else{
-            const newCompra = new Compra({
-                fecha: Date.now(),
-                numCompra,
-                numRemitoProveedor,
-                transporte,
-                proveedor,
-                producto, 
-                cantidad, 
-                unitario,
-                detalle,
-                total,
-                estado,
-                observaciones,
-                detallePago,
-                items,
-                cuit: Number(cuit),
-            });
-            await newCompra.save();
-            return res.json(newCompra);
-        }
+    try {
+        const newCompra = new Compra({
+            fecha: fecha,
+            numCompra,
+            numRemitoProveedor,
+            transporte,
+            proveedor,
+            producto,
+            cantidad,
+            unitario,
+            detalle,
+            total,
+            estado,
+            observaciones,
+            detallePago,
+            items,
+            cuit: Number(cuit),
+        });
+        await newCompra.save();
+        return res.json(newCompra);
+
     } catch (error) {
         console.log(error);
     }
