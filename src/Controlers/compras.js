@@ -1,13 +1,13 @@
 const Compra = require('../Models/modelCompras');
 
-const getAllCompras = async(req, res) => {
-    //así llega fecha: 2024-07-01
+const getAllCompras = async (req, res) => {
     try {
-        const { detalle, estado, fechaDesde, fechaHasta } = req.query; 
-        let filtro = {}; 
+        const { detalle, estado, fechaDesde, fechaHasta } = req.query;
+        
+        let filtro = {};
 
-        //filtro por detalle (Compra o Anticipo)
-        if(detalle && detalle !== "todos"){
+        // Filtro por detalle (Compra o Anticipo)
+        if (detalle && detalle !== "todos") {
             filtro.detalle = detalle;
         }
         // Filtro por estado (Debe o Pagado) si se proporciona
@@ -16,22 +16,25 @@ const getAllCompras = async(req, res) => {
         }
 
         // Filtro por fechas si se proporcionan
-        if (fechaDesde && fechaHasta) {
-            const startDate = new Date(fechaDesde);
-            startDate.setHours(0, 0, 0, 0); // Establece la hora al inicio del día
+        if (fechaDesde || fechaHasta) {
+            const startDate = fechaDesde ? new Date(fechaDesde) : null;
+            const endDate = fechaHasta ? new Date(fechaHasta) : null;
 
-            const endDate = new Date(fechaHasta);
-            endDate.setHours(23, 59, 59, 999); // Establece la hora al final del día
-
-            filtro.fecha = {
-                $gte: startDate,
-                $lte: endDate,
-            };
-        } else if (!fechaDesde && !fechaHasta) {
-            // Si no se proporcionan fechas, filtra por el mes actual
+            // Configurar el filtro con las fechas ajustadas en UTC
+            filtro.fecha = {};
+            if (startDate) {
+                startDate.setUTCHours(0, 0, 0, 0);  // Inicio del día en UTC
+                filtro.fecha.$gte = startDate;
+            }
+            if (endDate) {
+                endDate.setUTCHours(23, 59, 59, 999);  // Final del día en UTC
+                filtro.fecha.$lte = endDate;
+            }
+        } else {
+            // Si no se proporcionan fechas, usa el mes actual
             const fechaActual = new Date();
-            const mesInicio = new Date(fechaActual.getFullYear(), fechaActual.getMonth(), 1);
-            const mesFin = new Date(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0);
+            const mesInicio = new Date(Date.UTC(fechaActual.getFullYear(), fechaActual.getMonth(), 1, 1, 0, 0));
+            const mesFin = new Date(Date.UTC(fechaActual.getFullYear(), fechaActual.getMonth() + 1, 0, 23, 59, 59));
 
             filtro.fecha = {
                 $gte: mesInicio,
@@ -39,13 +42,14 @@ const getAllCompras = async(req, res) => {
             };
         }
 
-        // Buscar los remitos que coincidan con el CUIT y el filtro aplicado
+        // Buscar los remitos que coincidan con el filtro aplicado
         const compras = await Compra.find(filtro);
         res.json(compras);
     } catch (error) {
         res.status(500).json({ message: error.message });
     }
 };
+
 
 //trae compras hacia un prov y retorna el num del úlltimo remito
 const getUltimoRemito = async(req, res) => {
@@ -150,7 +154,7 @@ const creaCompra = async(req, res) => {
     } = req.body; 
     try {
         const newCompra = new Compra({
-            fecha: fecha,
+            fecha,
             numCompra,
             numRemitoProveedor,
             transporte,
