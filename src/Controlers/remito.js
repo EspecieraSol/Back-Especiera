@@ -126,11 +126,15 @@ const getRemitoById = async(req,res) => {
 const creaRemito = async (req, res) => {
     try {
         const { numRemito, cliente, items, fecha, totPedido, cuit, condicion_pago, estado, bultos, transporte } = req.body;
-        
 
-        // Crear un objeto Date a partir de la fecha recibida (YYYY-MM-DD) pero sin la conversión automática a UTC
+        // Crear un objeto Date a partir de la fecha recibida (YYYY-MM-DD)
         let [year, month, day] = fecha.split('-'); // Dividimos la fecha recibida
-        let fechaLocal = new Date(year, month - 1, day); // Aquí creamos la fecha local sin horas
+        let fechaLocal = new Date(year, month - 1, day); // Aquí creamos la fecha local
+
+        // Validar si la fecha se creó correctamente
+        if (isNaN(fechaLocal.getTime())) {
+            throw new Error('Fecha inválida');
+        }
 
         // Obtener la hora actual local
         const ahora = new Date();
@@ -138,11 +142,9 @@ const creaRemito = async (req, res) => {
         // Ajustar la fecha recibida para asignar la hora actual local
         fechaLocal.setHours(ahora.getHours(), ahora.getMinutes(), ahora.getSeconds(), ahora.getMilliseconds());
 
-        console.log("fechaHora ajustada:", fechaLocal);
-
         // Calcular el total de kgs del remito
         let totKgs = 0;
-        items.forEach(item => {
+        items?.forEach(item => {
             if (item.unidadMedida !== "unidad") {
                 totKgs += item.cantidad;
             }
