@@ -125,7 +125,7 @@ const getRemitoById = async(req,res) => {
 //crea
 const creaRemito = async (req, res) => {
     try {
-        const { numRemito, cliente, items, fecha, totPedido, cuit, condicion_pago, estado, bultos, transporte } = req.body;
+        const { numRemito, cliente, items, fecha, totPedido, cuit, condicion_pago, estado, bultos,tiporRemito } = req.body;
 
         // Crear un objeto Date a partir de la fecha recibida (YYYY-MM-DD)
         let [year, month, day] = fecha.split('-'); // Dividimos la fecha recibida
@@ -157,11 +157,11 @@ const creaRemito = async (req, res) => {
             items,
             fecha: fechaLocal, // Utilizamos la fecha con la hora ajustada
             totPedido,
+            tiporRemito,
             cuit,
             condicion_pago,
             estado,
             bultos,
-            transporte,
             totKgs
         });
         
@@ -192,20 +192,21 @@ const modificaRemito = async(req, res) => {
         // Verifica si la fecha está definida y bien formateada
         let fechaFormateada = fecha ? new Date(fecha).toISOString().split('T')[0] + 'T01:00:00Z' : undefined;
 
+        //busco el remito a modif ya q puede q no me traiga todos las propiedades
+        const remitoModif = Remito.findById(_id);
 
         // Actualiza solo los campos necesarios
         const updatedFields = {
-            numRemito,
-            cliente, 
-            items,
+            numRemito: remitoModif.numRemito,
+            cliente: cliente || remitoModif.cliente, 
+            items: remitoModif.items,
             fecha: fechaFormateada, 
             totPedido, 
-            cuit, 
+            cuit: remitoModif.cuit, 
             condicion_pago, 
-            estado,
-            bultos,
-            transporte,
-            totKgs
+            estado: remitoModif.estado,
+            bultos: remitoModif.bultos,
+            totKgs: remitoModif.totKgs
         };
 
         const remito = await Remito.findByIdAndUpdate(_id, updatedFields, { new: true });

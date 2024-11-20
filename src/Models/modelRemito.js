@@ -10,7 +10,6 @@ const RemitoSchema = Schema({
     condicion_pago: {type: String},
     estado: {type: String},
     bultos: {type: Number},
-    transporte: {type: String},
     totKgs: {type: Number},
     tipoRemito: {type: String}, //venta o pago
 });
