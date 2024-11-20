@@ -9,7 +9,7 @@ const RemitoSchema = Schema({
     cuit: {type: Number, required: true},
     fecha: {type: Date, required: true},
     condicion_pago: {type: String},
-    estado: {type: String},
+    estado: {type: String}, //pagado - debe
     bultos: {type: Number},
     totKgs: {type: Number},    
 });
