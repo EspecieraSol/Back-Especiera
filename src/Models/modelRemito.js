@@ -5,7 +5,7 @@ const RemitoSchema = Schema({
     numRemito: {type: Number},
     items: {type: Array, default:[]},
     totPedido: {type: Number, required: true},
-    tipoRemito: {type: String, required: true }, //venta o pago
+    tipoRemito: {type: String, required: true }, //venta o Pago
     cuit: {type: Number, required: true},
     fecha: {type: Date, required: true},
     condicion_pago: {type: String},
