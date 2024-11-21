@@ -156,7 +156,7 @@ console.log("Body:", req.body);
 
         let newRemito;
         // Crear un nuevo remito con la fecha y hora ajustada
-        if(items.length > 0){
+        if(items?.length > 0){
             newRemito = new Remito({
                 numRemito,
                 cliente,
