@@ -155,19 +155,35 @@ console.log("Body:", req.body);
         });
 
         // Crear un nuevo remito con la fecha y hora ajustada
-        const newRemito = new Remito({
-            numRemito,
-            cliente,
-            items,
-            fecha: fechaLocal, // Utilizamos la fecha con la hora ajustada
-            totPedido,
-            tipoRemito,
-            cuit,
-            condicion_pago,
-            estado,
-            bultos,
-            totKgs
-        });
+        if(items.length > 0){
+            const newRemito = new Remito({
+                numRemito,
+                cliente,
+                items,
+                fecha: fechaLocal, // Utilizamos la fecha con la hora ajustada
+                totPedido,
+                tipoRemito: "Venta",
+                cuit,
+                condicion_pago,
+                estado,
+                bultos,
+                totKgs
+            });
+        }else{
+            const newRemito = new Remito({
+                numRemito,
+                cliente,
+                items,
+                fecha: fechaLocal, // Utilizamos la fecha con la hora ajustada
+                totPedido,
+                tipoRemito: "Pago",
+                cuit,
+                condicion_pago,
+                estado,
+                bultos,
+                totKgs
+            });
+
         
         // Guardar el nuevo remito en la base de datos
         await newRemito.save();
