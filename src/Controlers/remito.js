@@ -154,9 +154,10 @@ console.log("Body:", req.body);
             }
         });
 
+        let newRemito;
         // Crear un nuevo remito con la fecha y hora ajustada
         if(items.length > 0){
-            const newRemito = new Remito({
+            newRemito = new Remito({
                 numRemito,
                 cliente,
                 items,
@@ -170,7 +171,7 @@ console.log("Body:", req.body);
                 totKgs
             });
         }else{
-            const newRemito = new Remito({
+            newRemito = new Remito({
                 numRemito,
                 cliente,
                 items,
@@ -183,7 +184,7 @@ console.log("Body:", req.body);
                 bultos,
                 totKgs
             });
-
+        }
         
         // Guardar el nuevo remito en la base de datos
         await newRemito.save();
