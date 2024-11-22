@@ -130,7 +130,7 @@ const getRemitoById = async(req,res) => {
 const creaRemito = async (req, res) => {
     try {
         const { numRemito, cliente, items, fecha, totPedido, cuit, condicion_pago, estado, bultos, tipoRemito } = req.body;
-console.log("Body:", req.body);
+
         // Crear un objeto Date a partir de la fecha recibida (YYYY-MM-DD)
         let [year, month, day] = fecha.split('-'); // Dividimos la fecha recibida
         let fechaLocal = new Date(year, month - 1, day); // Aquí creamos la fecha local
@@ -154,37 +154,20 @@ console.log("Body:", req.body);
             }
         });
 
-        let newRemito;
         // Crear un nuevo remito con la fecha y hora ajustada
-        if(items?.length > 0){
-            newRemito = new Remito({
-                numRemito,
-                cliente,
-                items,
-                fecha: fechaLocal, // Utilizamos la fecha con la hora ajustada
-                totPedido,
-                tipoRemito: "Venta",
-                cuit,
-                condicion_pago,
-                estado,
-                bultos,
-                totKgs
-            });
-        }else{
-            newRemito = new Remito({
-                numRemito,
-                cliente,
-                items,
-                fecha: fechaLocal, // Utilizamos la fecha con la hora ajustada
-                totPedido,
-                tipoRemito: "Pago",
-                cuit,
-                condicion_pago,
-                estado,
-                bultos,
-                totKgs
-            });
-        }
+        const newRemito = new Remito({
+            numRemito,
+            cliente,
+            items,
+            fecha: fechaLocal, // Utilizamos la fecha con la hora ajustada
+            totPedido,
+            tipoRemito,
+            cuit,
+            condicion_pago,
+            estado,
+            bultos,
+            totKgs
+        });
         
         // Guardar el nuevo remito en la base de datos
         await newRemito.save();
