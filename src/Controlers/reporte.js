@@ -69,6 +69,19 @@ const traeGastosMes = async(month, year) => {
         
     }
 };
+//funcion calc kgs vendidos
+const totKgsVendidos = (ventas) => {
+    let tot = 0;
+    ventas.forEach(remito => {
+        remito.items.forEach(item => {
+            tot += parseFloat(item.cantidad) || 0; // Asegúrate de que item.cantidad sea un número
+        });
+    });
+
+    //que sea solo con dos dijitos despues de la coma, pero formato numero no string
+    return parseFloat(tot.toFixed(2));
+};
+
 //funcion trae ventas Calc todo el mes Retorna el tot del mes
 const traeVentas = async(month, year) => {
     try {
@@ -108,7 +121,7 @@ const traeVentas = async(month, year) => {
                 totGanancias += calcGanancia(v.items);
             });
             //calc tot Kgs Vendidos
-            totKgs = parseFloat(totKgsVendidos(ventas).toFixed(2));
+            totKgs = totKgsVendidos(ventas);
 
             return {
                 totVentas,
@@ -135,7 +148,7 @@ const traeVentas = async(month, year) => {
                 totGanancias += calcGanancia(v.items);
             });
             //calc tot Kgs Vendidos
-            totKgs = parseFloat(totKgsVendidos(ventas).toFixed(2));
+            totKgs = totKgsVendidos(ventas);
 
             return {
                 totVentas,
@@ -241,18 +254,7 @@ const nombreMes = (num) => {
     if(num === 11) {return "Noviembre"}
     if(num === 12) {return "Diciembre"}
 };
-//funcion calc kgs vendidos
-const totKgsVendidos = (ventas) => {
-    let tot = 0;
-    ventas.forEach(remito => {
-        remito.items.forEach(item => {
-            tot += parseFloat(item.cantidad) || 0; // Asegúrate de que item.cantidad sea un número
-        });
-    });
 
-    //que sea solo con dos dijitos despues de la coma, pero formato numero no string
-    return parseFloat(tot.toFixed(2));
-};
 //----------------------------------------------------------------------
 //trae reportes
 const reporteMes = async(req, res) => {
