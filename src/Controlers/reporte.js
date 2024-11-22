@@ -69,6 +69,7 @@ const traeGastosMes = async(month, year) => {
         
     }
 };
+
 //funcion calc kgs vendidos
 const totKgsVendidos = (ventas) => {
     let tot = 0;
@@ -165,6 +166,7 @@ const traeVentas = async(month, year) => {
         };
     }
 };
+
 //funcion trae Compras
 const traeCompras = async(month, year) => {
     let compras;
