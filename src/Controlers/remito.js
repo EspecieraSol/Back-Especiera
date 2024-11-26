@@ -184,7 +184,6 @@ const modificaRemito = async(req, res) => {
     try {
         const {_id} = req.params;
         const { cliente, items, fecha, totPedido, cuit, condicion_pago, bultos } = req.body; 
-        console.log("Modif body:", req.body);
 
         // Calcula el tot de kgs del remito
         let totKgs = 0;
@@ -233,7 +232,6 @@ const modificaRemito = async(req, res) => {
 const eliminaRemito = async(req, res) => { 
     try {
         const { _id } = req.params;
-        console.log("Elimina id:", _id);
 
         if (!_id) {
             return res.status(400).json({ message: "El ID es requerido" });
