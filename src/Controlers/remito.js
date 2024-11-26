@@ -219,26 +219,38 @@ const modificaRemito = async(req, res) => {
     }
 };
 //elimna remito
-const eliminaRemito = async(req, res) => { 
+const mongoose = require('mongoose');
+
+const eliminaRemito = async (req, res) => {
     try {
         const { _id } = req.params;
 
+        // Validar si el ID está presente
         if (!_id) {
             return res.status(400).json({ message: "El ID es requerido" });
         }
 
-        const remito = await Remito.findByIdAndDelete({_id: ObjectId(_id)});
+        // Validar si el ID es un ObjectId válido
+        if (!mongoose.Types.ObjectId.isValid(_id)) {
+            return res.status(400).json({ message: "El ID proporcionado no es válido" });
+        }
 
+        // Buscar y eliminar el documento
+        const remito = await Remito.findByIdAndDelete(_id);
+
+        // Si no se encuentra el documento
         if (!remito) {
             return res.status(404).json({ message: "Remito no encontrado" });
         }
 
-        res.json({ message: "Remito eliminado con éxito", remito });
+        // Respuesta exitosa
+        res.status(200).json({ message: "Remito eliminado con éxito", remito });
     } catch (error) {
         console.error("Error al eliminar el remito:", error);
-        res.status(500).json({ message: "Error al eliminar el remito" });
+        res.status(500).json({ message: "Error al eliminar el remito", error: error.message });
     }
 };
+
 
 //----Calcula Saldo anteriror de un cliente
 const calcSaldoAnteriror = async(req, res) => {
