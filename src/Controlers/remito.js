@@ -368,7 +368,7 @@ module.exports = {
     ultimoRemito,
     creaRemito,
     modificaRemito,
-    elimninaRemito,
+    eliminaRemito,
     agregaEntrega,
     editaEntrega,
     eliminarEntrega,
