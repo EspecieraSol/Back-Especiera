@@ -223,7 +223,7 @@ const mongoose = require('mongoose');
 
 const eliminaRemito = async (req, res) => {
     try {
-        const { _id } = req.params;
+        const { _id } = req.params; console.log("Id:", _id);
 
         // Validar si el ID está presente
         if (!_id) {
