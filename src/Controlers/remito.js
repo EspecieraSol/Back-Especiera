@@ -1,5 +1,5 @@
 const Remito = require('../Models/modelRemito');
-
+const { ObjectId } = require('mongodb'); // Para usar el ID de MongoDB
 
 const getAllRemitos = async (req, res) => {
     try {
@@ -222,13 +222,12 @@ const modificaRemito = async(req, res) => {
 const eliminaRemito = async(req, res) => { 
     try {
         const { _id } = req.params;
-        //console.log("Elimina id:", _id);
 
         if (!_id) {
             return res.status(400).json({ message: "El ID es requerido" });
         }
 
-        const remito = await Remito.findByIdAndDelete(_id);
+        const remito = await Remito.findByIdAndDelete({_id: ObjectId(_id)});
 
         if (!remito) {
             return res.status(404).json({ message: "Remito no encontrado" });
