@@ -58,7 +58,7 @@ const buscaClientePorCuit = async(req, res) => {
         const cliente = await Cliente.findOne({ cuit: cuitNumber });
 
         if (!cliente) {
-            return res.status(404).json({ message: 'El cliente no existe' });
+            return res.json({ message: 'El cliente no existe' });
         }
 
         res.json(cliente);
