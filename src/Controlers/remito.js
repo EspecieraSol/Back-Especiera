@@ -1,5 +1,5 @@
 const Remito = require('../Models/modelRemito');
-const { ObjectId } = require('mongodb'); // Para usar el ID de MongoDB
+
 
 const getAllRemitos = async (req, res) => {
     try {
@@ -89,7 +89,7 @@ const getRemitosCliente = async (req, res) => {
 //trae el último remito para obtnere el num 
 const ultimoRemito = async(req, res) => {
     try { 
-        const remito =  await Remito.find().sort({$natural:-1}).limit(1);
+        const remito = await Remito.find({tipoRemito: "Venta"}).sort({numRemito: -1}).limit(1);
         if(remito.length){
             res.json({
                 ultimoRemito: remito[0].numRemito
@@ -145,7 +145,7 @@ const creaRemito = async (req, res) => {
 
         // Crear un nuevo remito con la fecha y hora ajustada
         const newRemito = new Remito({
-            numRemito,
+            numRemito, 
             cliente,
             items,
             fecha: fechaLocal, // Utilizamos la fecha con la hora ajustada
@@ -223,7 +223,7 @@ const mongoose = require('mongoose');
 
 const eliminaRemito = async (req, res) => {
     try {
-        const { _id } = req.params; console.log("Id:", _id);
+        const { _id } = req.params;
 
         // Validar si el ID está presente
         if (!_id) {
