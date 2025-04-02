@@ -34,7 +34,7 @@ const createGasto = async (req, res) => {
     try {
         // Convertir la fecha recibida (en formato DD/MM/YYYY) a un objeto Date
         let [day, month, year] = fecha.split('/');
-        let fechaConHora = new Date(`${year}-${month}-${day}T00:00:00`);
+        let fechaConHora = new Date(`${year}-${month}-${day}T10:00:00`); //modificacion para que tome la hora 10:00:00
 
         // Verificar si la hora es 00:00:00 y sumarle 1 hora
         if (fechaConHora.getHours() === 0) {
@@ -100,6 +100,7 @@ const eliminaGasto = async (req, res) => {
         res.status(500).json({ message: 'Error al eliminar el gasto', error });
     }
 };
+
 
 module.exports = {
     getAllGastos,
