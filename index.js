@@ -27,7 +27,7 @@ app.use(cors());
 connectDB();
 
 //--invoco rutas con app-------------------------------------------------
-app.use("/productos", routerProductos);
+app.use("/productos", routerProductos)
 app.use('/clientes', routerClientes);
 app.use('/remitos', routerRemitos);
 app.use('/proveedores', routerProveedores);
